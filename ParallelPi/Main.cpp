@@ -1,9 +1,6 @@
 #include <iostream>
 #include <time.h>
 
-#define _USE_MATH_DEFINES
-#include <cmath>
-
 using namespace std;
 
 int main() {
@@ -13,13 +10,12 @@ int main() {
 	clock_t t1 = clock();	//отмеряем время начала
 	
 #pragma omp parallel for reduction(+:pi)	//вычисляем ПИ через распараллеливание
-	for (int i = 1; i < 10000000; i++) {	//взяли 10 миллионов итераций
+	for (int i = 1; i < 100000000; i++) {	//взяли 10 миллионов итераций
 		pi += pow(-1, i) / (pow(3, i)*(2 * i + 1));	//используем ряды для вычисления ПИ
 	}
 	pi = pi * 2 * sqrt(3);
 	clock_t t2 = clock();	//отмеряем время окончания вычислений
-	printf("%.60f", pi);
-	cout << endl << pi - truePI;
+	printf("%.50f", pi);
 	cout << endl << "Time: " << (double)(t2 - t1) / (double)CLOCKS_PER_SEC << '\n';	//время, затрченное на вычисление ПИ
 	cout << endl;
 
@@ -35,11 +31,10 @@ int main() {
 	pi1 = pi1 * 2 * sqrt(3);
 
 	t2 = clock();
-	printf("%.60f", pi1);
-	cout << endl << pi1 - truePI;
+	printf("%.50f", pi1);
 	cout << endl;
 	cout << "Time: " << (double)(t2 - t1) / (double)CLOCKS_PER_SEC << '\n';
 	cout << endl;
-	printf("true PI = \n%.60f\n", truePI);
+	printf("true PI = \n%.50f\n", truePI);
 	system("pause");
 }
